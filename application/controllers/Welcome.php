@@ -106,7 +106,7 @@ class Welcome extends CI_Controller
 		$data['content'] = 'print';
 		$where = array('tgl' => date('dmY'));
 		$data['antrian'] = $this->M_crud->get_max_id('transaksi', 'no_antrian', $where);
-		$this->load->view('layout', $data);
+		$this->load->view('print', $data);
 	}
 	public function get_antri()
 	{

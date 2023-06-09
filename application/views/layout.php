@@ -64,7 +64,7 @@ if ($this->session->userdata('level') == 'Penjaga') {
 					<?php
 					foreach ($text_jalan as $text) { ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<img src="<?php echo base_url('media/agenda/' . $text->img); ?>" height="20">&nbsp;&nbsp;<?php echo $text->text;
-																										} ?>
+																											} ?>
 				</marquee>
 			</div>
 			<div class="col-md-4">

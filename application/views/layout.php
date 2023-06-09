@@ -70,10 +70,11 @@ if ($this->session->userdata('level') == 'Penjaga') {
 			<div class="col-md-4">
 				<?php
 				if (empty($this->session->userdata('level'))) { ?>
-					<a class="footer" href="<?php echo site_url('welcome/login/'); ?>">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ? '</strong>' : '' ?></a>
-					<a class="footer" href="<?php echo site_url('welcome/antrian/'); ?>">Nomer Antrian</a>
+					<a class="footer">Page rendered in <strong>{elapsed_time}</strong> s. <?php echo (ENVIRONMENT === 'development') ? '</strong>' : '' ?></a>
+					<a class="footer" href="<?php echo site_url('welcome/login/'); ?>">Login</a>
+					<a class="footer" href="<?php echo site_url('welcome/antrian/'); ?>">Nomor Antrian</a>
 				<?php } else { ?>
-					<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ? '</strong>' : '' ?></p>
+					<p class="footer">Page rendered in <strong>{elapsed_time}</strong> s. <?php echo (ENVIRONMENT === 'development') ? '</strong>' : '' ?></p>
 				<?php }
 				?>
 			</div>

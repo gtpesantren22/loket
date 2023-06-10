@@ -37,25 +37,27 @@
 <link href="<?php echo base_url('assets/print') ?>/lib/noty.css" rel="stylesheet">
 <link href="<?php echo base_url('assets/print') ?>/lib/themes/metroui.css" rel="stylesheet">
 
-<div class="card" style="width: 20rem;">
+<div class="card" style="width: 17rem;">
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item text-center">
 			<h5>PSB 2023</h5>
-			<h8>PonPes Darul Lughah Wal Karomah</h8>
+			<h8>Panitia Penerimaan Santri Baru</h8>
+			<small>PonPes Darul Lughah Wal Karomah</small>
 		</li>
 		<li class="list-group-item text-center">
 			<h5>NO. ANTRIAN</h5>
-			<h1><?php echo $antrian->row('no_antrian');
-				if ($antrian->row('no_antrian') < 1) {
-					$antri = 1;
-				} else {
-					$antri = $antrian->row('no_antrian') + 1;
-				}
-				?></h1>
+			<h1 style="font-size: 90px;"><?php echo $antrian->row('no_antrian');
+											if ($antrian->row('no_antrian') < 1) {
+												$antri = 1;
+											} else {
+												$antri = $antrian->row('no_antrian') + 1;
+											}
+											?></h1>
 			<h6><?= date('d M Y') . ' ' . date('H:i') ?></h6>
 		</li>
 		<li class="list-group-item text-center">
 			<h5>TERIMAKASIH</h5>
+			<small>Semoga Barokah. Aminn</small>
 		</li>
 	</ul>
 </div>

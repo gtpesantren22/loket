@@ -73,8 +73,9 @@ class Antrian extends CI_Controller
         $urut = $this->db->query("SELECT COUNT(*) as jml FROM antrian WHERE tanggal = '$harini' ")->row();
         $nama = $input['nama'];
         $jenis = $input['jenis'];
+        $noAntri = $urut->jml + 1;
         $data = [
-            'nomor' => $urut->jml + 1,
+            'nomor' => $noAntri,
             'loket' => 0,
             'tanggal' => $harini,
             'waktu' => date('H:i:s'),
@@ -88,7 +89,12 @@ class Antrian extends CI_Controller
         if ($save) {
             echo json_encode([
                 'status' => 'success',
-                'message' => 'Antrian berhasil ditambahkan'
+                'message' => 'Antrian berhasil ditambahkan',
+                'data' => [
+                    'nomor' => $noAntri,
+                    'jenis' => $jenis,
+                    'nama' => $nama,
+                ]
             ]);
         } else {
             echo json_encode([

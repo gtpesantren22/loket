@@ -237,7 +237,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<div class="text-gray-700">Nama: <span class="font-medium"><?= $last ? $last->nama : '' ?></span>
 						</div>
 					</div>
-					<a href="<?= base_url('welcome/batal/' . $last->id) ?>" onclick="return confirm('Yakin akan dibatalkan ?')"
+					<a href="<?= base_url('welcome/batal/' . $last ? $last->id : '') ?>" onclick="return confirm('Yakin akan dibatalkan ?')"
 						class="w-full bg-accent hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center">
 						<i class="fas fa-trash mr-2"></i> Batalkan
 					</a>

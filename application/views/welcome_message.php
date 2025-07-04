@@ -287,7 +287,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		<!-- Footer -->
 		<footer class="mt-12 text-center text-gray-600">
-			<p>© 2023 Sistem Antrian Digital - Dinas Pelayanan Publik</p>
+			<p>© 2025 Sistem Antrian Digital - PSB PPDWK 2025/2026</p>
 			<p class="mt-2 text-sm">Nomor antrian dapat dipantau melalui aplikasi mobile kami</p>
 			<div class="flex justify-center mt-4 space-x-4">
 				<a href="#" class="text-primary hover:text-blue-700"><i class="fab fa-whatsapp text-xl"></i></a>

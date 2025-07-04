@@ -157,7 +157,6 @@ class Welcome extends MY_Controller
 		if ($cekUser && $cekMeja) {
 			$this->session->set_flashdata('error', 'Meja atau operator sedang melayani');
 		} else {
-			$upOld = $this->model->edit('petugas', ['user_id' => ''], 'user_id', $user);
 			$upNew = $this->model->edit('petugas', ['user_id' => $user], 'meja_id', $meja);
 			if ($upOld && $upNew) {
 				$this->session->set_flashdata('error', 'Update selesai');

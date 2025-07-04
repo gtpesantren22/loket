@@ -97,4 +97,24 @@ class Antrian extends CI_Controller
             ]);
         }
     }
+
+    public function batal($id = null)
+    {
+        if (!$id) {
+            echo json_encode(['status' => 'error', 'message' => 'ID dibutuhkan']);
+            return;
+        }
+        $cek = $this->model->getBy('antrian', 'id', $id)->row();
+        if ($cek->ket != 'menunggu') {
+            echo json_encode(['status' => 'error', 'message' => 'Antrian sedangdalam proses']);
+            return;
+        }
+
+        $save = $this->model->hapus('antrian', 'id', $id);
+        if ($save) {
+            echo json_encode(['status' => 'success', 'message' => 'Data dibatalkan']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Gagal pembatalan data']);
+        }
+    }
 }

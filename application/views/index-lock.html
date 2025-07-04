@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Antrian Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-dark mb-2">Sistem Antrian Digital</h1>
+            <p class="text-lg text-gray-600">Loket Pelayanan Publik Kota Cerdas</p>
+            <div class="mt-4 flex justify-center">
+                <div class="bg-primary text-white px-4 py-2 rounded-full flex items-center">
+                    <i class="fas fa-clock mr-2"></i>
+                    <span id="current-time">00:00:00</span>
+                </div>
+                <div class="bg-secondary text-white px-4 py-2 rounded-full flex items-center ml-4">
+                    <span id="current-date">Hari, DD/MM/YYYY</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Panel Antrian Sekarang -->
+            <div class="bg-white rounded-xl shadow-lg p-6 col-span-2">
+                <h2 class="text-2xl font-semibold text-dark mb-6">Antrian Saat Ini</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Loket 1 -->
+                    <div class="bg-gray-100 rounded-lg p-4 text-center">
+                        <div
+                            class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl font-bold">1</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">Meja Pendaftaran</h3>
+                        <div class="text-4xl font-bold text-accent mb-2" id="current-queue-1">A101</div>
+                        <div class="text-gray-500" id="current-name-1">Nama Pengunjung</div>
+                    </div>
+
+                    <!-- Loket 2 -->
+                    <div class="bg-gray-100 rounded-lg p-4 text-center">
+                        <div
+                            class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl font-bold">2</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">Loket Pembayaran</h3>
+                        <div class="text-4xl font-bold text-accent mb-2" id="current-queue-2">B205</div>
+                        <div class="text-gray-500" id="current-name-2">Nama Pengunjung</div>
+                    </div>
+
+                    <!-- Loket 3 -->
+                    <div class="bg-gray-100 rounded-lg p-4 text-center">
+                        <div
+                            class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl font-bold">3</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">Loket Informasi</h3>
+                        <div class="text-4xl font-bold text-accent mb-2" id="current-queue-3">C312</div>
+                        <div class="text-gray-500" id="current-name-3">Nama Pengunjung</div>
+                    </div>
+
+                    <!-- Loket 4 -->
+                    <div class="bg-gray-100 rounded-lg p-4 text-center">
+                        <div
+                            class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl font-bold">4</span>
+                        </div>
+                        <h3 class="font-medium text-lg mb-2">Loket Pengaduan</h3>
+                        <div class="text-4xl font-bold text-accent mb-2" id="current-queue-4">D415</div>
+                        <div class="text-gray-500" id="current-name-4">Nama Pengunjung</div>
+                    </div>
+                </div>
+
+                <!-- Antrian Berikutnya -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4">Antrian Berikutnya</h3>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center font-medium">
+                            <div>Loket 1: <span class="text-accent" id="next-queue-1">A102</span></div>
+                            <div>Loket 2: <span class="text-accent" id="next-queue-2">B206</span></div>
+                            <div>Loket 3: <span class="text-accent" id="next-queue-3">C313</span></div>
+                            <div>Loket 4: <span class="text-accent" id="next-queue-4">D416</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Ambil Antrian -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-semibold text-dark mb-6">Ambil Antrian</h2>
+
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Jenis Layanan</label>
+                        <select
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option>Pilih Layanan</option>
+                            <option>Pendaftaran</option>
+                            <option>Pembayaran</option>
+                            <option>Informasi</option>
+                            <option>Pengaduan</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">Nama Lengkap</label>
+                        <input type="text"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                            placeholder="Masukkan nama Anda">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">Nomor HP</label>
+                        <input type="tel"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                            placeholder="08xxxxxxxxxx">
+                    </div>
+
+                    <button type="button"
+                        class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-ticket-alt mr-2"></i> Ambil Nomor Antrian
+                    </button>
+                </form>
+
+                <!-- Info Antrian Anda -->
+                <div class="mt-8 bg-blue-50 rounded-lg p-4 border border-blue-200">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-2">Antrian Anda</h3>
+                    <div class="text-center py-4">
+                        <div class="text-5xl font-bold text-accent mb-2">B207</div>
+                        <div class="text-gray-700">Estimasi waktu tunggu: <span class="font-medium">15 menit</span>
+                        </div>
+                    </div>
+                    <button type="button"
+                        class="w-full bg-secondary hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-qrcode mr-2"></i> Tampilkan QR Code
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daftar Antrian -->
+        <div class="mt-10 bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-dark mb-6">Daftar Antrian Hari Ini</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700">
+                            <th class="py-3 px-4 text-left rounded-tl-lg">No. Antrian</th>
+                            <th class="py-3 px-4 text-left">Layanan</th>
+                            <th class="py-3 px-4 text-left">Nama</th>
+                            <th class="py-3 px-4 text-left">Waktu Ambil</th>
+                            <th class="py-3 px-4 text-left rounded-tr-lg">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-3 px-4 font-medium">A101</td>
+                            <td class="py-3 px-4">Pendaftaran</td>
+                            <td class="py-3 px-4">Budi Santoso</td>
+                            <td class="py-3 px-4">08:15:23</td>
+                            <td class="py-3 px-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Sedang
+                                    Dilayani</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">B205</td>
+                            <td class="py-3 px-4">Pembayaran</td>
+                            <td class="py-3 px-4">Ani Wijaya</td>
+                            <td class="py-3 px-4">08:20:45</td>
+                            <td class="py-3 px-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Sedang
+                                    Dilayani</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">C312</td>
+                            <td class="py-3 px-4">Informasi</td>
+                            <td class="py-3 px-4">Rina Permata</td>
+                            <td class="py-3 px-4">08:25:10</td>
+                            <td class="py-3 px-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Sedang
+                                    Dilayani</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">D415</td>
+                            <td class="py-3 px-4">Pengaduan</td>
+                            <td class="py-3 px-4">Doni Pratama</td>
+                            <td class="py-3 px-4">08:28:33</td>
+                            <td class="py-3 px-4"><span
+                                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Sedang
+                                    Dilayani</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">A102</td>
+                            <td class="py-3 px-4">Pendaftaran</td>
+                            <td class="py-3 px-4">Dewi Kusuma</td>
+                            <td class="py-3 px-4">08:30:33</td>
+                            <td class="py-3 px-4"><span
+                                    class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">Menunggu</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-600">
+            <p>© 2023 Sistem Antrian Digital - Dinas Pelayanan Publik</p>
+            <p class="mt-2 text-sm">Nomor antrian dapat dipantau melalui aplikasi mobile kami</p>
+            <div class="flex justify-center mt-4 space-x-4">
+                <a href="#" class="text-primary hover:text-blue-700"><i class="fab fa-whatsapp text-xl"></i></a>
+                <a href="#" class="text-primary hover:text-blue-700"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="text-primary hover:text-blue-700"><i class="fas fa-globe text-xl"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Update waktu dan tanggal secara real-time
+        function updateDateTime() {
+            const now = new Date();
+
+            // Format waktu
+            const timeString = now.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Format tanggal
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('id-ID', options);
+
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+        }
+
+        // Update setiap detik
+        setInterval(updateDateTime, 1000);
+        updateDateTime(); // Panggil sekali saat pertama kali load
+
+        // Contoh data antrian (bisa diganti dengan data real dari API)
+        function updateQueueData() {
+            // Data contoh - bisa diganti dengan fetch API
+            const currentQueues = {
+                1: { number: 'A101', name: 'Budi Santoso' },
+                2: { number: 'B205', name: 'Ani Wijaya' },
+                3: { number: 'C312', name: 'Rina Permata' },
+                4: { number: 'D415', name: 'Doni Pratama' }
+            };
+
+            const nextQueues = {
+                1: 'A102',
+                2: 'B206',
+                3: 'C313',
+                4: 'D416'
+            };
+
+            // Update tampilan
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`current-queue-${i}`).textContent = currentQueues[i].number;
+                document.getElementById(`current-name-${i}`).textContent = currentQueues[i].name;
+                document.getElementById(`next-queue-${i}`).textContent = nextQueues[i];
+            }
+        }
+
+        updateQueueData();
+    </script>
+</body>
+
+</html>

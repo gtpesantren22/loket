@@ -1,3 +1,0 @@
-# loket
-# loket
-"# loket" 

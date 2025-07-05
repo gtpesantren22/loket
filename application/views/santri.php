@@ -231,18 +231,18 @@
             </div>
         </div>
     </div>
-
+    <pre>
+</pre>
     <script>
         // Data contoh santri (dalam aplikasi nyata, data ini akan berasal dari API)
-        const sampleData = <?= json_encode($data['data'] ?? [], JSON_UNESCAPED_UNICODE); ?>;
+        const sampleData = <?= json_encode($data ?? [], JSON_UNESCAPED_UNICODE); ?>;
+        console.log('DATA DARI PHP:', sampleData);
 
         // Inisialisasi DataTable
         let santriTable;
-        console.log('hasil :' + sampleData);
 
 
         $(document).ready(function() {
-            // const filteredData = sampleData.filter(row => row.lembaga.nama !== 'MI DARUL LUGHAH WAL KAROMAH' && row.lembaga.nama !== 'RA DARUL LUGHAH WAL KAROMAH' && row.pd_lama == null);
             santriTable = $('#santriTable').DataTable({
                 data: sampleData,
                 columns: [{
@@ -258,16 +258,16 @@
                         data: 'nama',
                         render: function(data, type, row) {
                             return `
-    <div class="flex items-center">
-        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-            <i class="fas fa-user"></i>
-        </div>
-        <div class="ml-4">
-            <div class="font-medium text-gray-900">${row.nama}</div>
-            <div class="text-gray-500 text-sm">${row.wilayah.nama || '-'}</div>
-        </div>
-    </div>
-    `;
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="font-medium text-gray-900">${row.nama}</div>
+                                        <div class="text-gray-500 text-sm">${row.desa || '-'}</div>
+                                    </div>
+                                </div>
+                                `;
                         }
                     },
                     {

@@ -13,34 +13,6 @@ class Santri extends MY_Controller
 
     public function index()
     {
-        // $apiUrl = "https://data.ppdwk.com/api/datatables?data=pendaftar&page=1&per_page=500&q=&sortby=created_at&sortbydesc=ASC&status=1";
-
-        // $token = $this->model->getBy('setting', 'kunci', 'token')->row('isi');
-
-        // $headers = [
-        //     "Authorization: Bearer $token",
-        //     "Content-Type: application/json",
-        // ];
-
-        // $ch = curl_init($apiUrl);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        // curl_setopt($ch, CURLOPT_HTTPGET, true); // GET request
-
-        // $response = curl_exec($ch);
-
-        // if (curl_errno($ch)) {
-        //     echo "cURL error: " . curl_error($ch);
-        // } else {
-        //     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //     // echo "HTTP Code: $httpCode\n";
-
-        //     // Decode JSON response
-        //     $result = json_decode($response, true); // true = associative array
-
-        // }
-        // $data['data'] = json_encode($result['data']['data']);
-        // Ambil data dari DB
         $santri = $this->psb->query("SELECT * FROM tb_santri WHERE ket = 'baru'")->result_array();
 
         // Simpan dalam key 'data'

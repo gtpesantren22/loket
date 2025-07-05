@@ -39,6 +39,9 @@
                     <i class="fas fa-user-circle text-primary mr-2"></i>
                     <span><?= $nama ?></span>
                 </div>
+                <button class="bg-secondary hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='<?= base_url('santri') ?>'">
+                    <i class="fas fa-users mr-2"></i> Data Santri
+                </button>
                 <button class="bg-danger hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='auth/logout'">
                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
                 </button>

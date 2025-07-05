@@ -117,6 +117,9 @@
                     <p class="text-gray-600">Total: <span id="totalSantri" class="font-medium">0 Santri</span></p>
                 </div>
                 <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full md:w-auto">
+                    <button class="flex bg-secondary hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='<?= base_url('meja') ?>'">
+                        <i class="fas fa-arrow-left mr-2"></i> Kembali
+                    </button>
                     <!-- Tombol Tambah Santri -->
                     <button id="btnTambahSantri" class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center whitespace-nowrap">
                         <i class="fas fa-plus mr-2"></i> Tambah Santri

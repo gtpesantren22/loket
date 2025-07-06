@@ -334,7 +334,7 @@
         // updateCurrentTime(); 
 
         let isSpeaking = false;
-        const ws = new WebSocket("wss://31.97.179.141:3200");
+        const ws = new WebSocket("wss://ws.ppdwk.com:3200");
 
         ws.onmessage = (event) => {
             const msg = JSON.parse(event.data);

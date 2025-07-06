@@ -14,6 +14,7 @@ class Meja extends MY_Controller
 		$data['nama'] = $this->session->userdata('nama');
 		$data['username'] = $this->session->userdata('username');
 		$data['user_id'] = $this->session->userdata('user_id');
+		$data['socket'] = $this->model->getBy('setting', 'kunci', 'socket')->row('isi');
 		$harini = date('Y-m-d');
 		$user_id = $this->session->userdata('user_id');
 		$data['tugas'] = $this->db->query("SELECT * FROM petugas JOIN user ON petugas.user_id=user.user_id JOIN meja ON petugas.meja_id=meja.id WHERE petugas.user_id = '$user_id' ")->row();

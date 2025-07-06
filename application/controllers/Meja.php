@@ -12,6 +12,7 @@ class Meja extends MY_Controller
 	public function index()
 	{
 		$data['nama'] = $this->session->userdata('nama');
+		$data['username'] = $this->session->userdata('username');
 		$data['user_id'] = $this->session->userdata('user_id');
 		$harini = date('Y-m-d');
 		$user_id = $this->session->userdata('user_id');
@@ -35,7 +36,7 @@ class Meja extends MY_Controller
 			$this->session->set_flashdata('error', 'Tidak ada antrian');
 			redirect('meja');
 		}
-		$cekProses = $this->model->getBy3('antrian', 'tanggal', $harini, 'ket', 'proses', 'loket', $meja)->num_rows();
+		$cekProses = $this->model->getBy2('antrian', 'ket', 'proses', 'loket', $meja)->num_rows();
 		if ($cekProses > 0) {
 			$this->session->set_flashdata('error', 'Ada antrian belum diselesaikan');
 			redirect('meja');
@@ -83,6 +84,32 @@ class Meja extends MY_Controller
 			redirect('meja');
 		} else {
 			$this->session->set_flashdata('error', 'gagal dislesaikan');
+			redirect('meja');
+		}
+	}
+
+	public function upAkun()
+	{
+		$id = $this->session->userdata('user_id');
+		$nama = $this->input->post('nama', true);
+		$username = $this->input->post('username', true);
+		$password = $this->input->post('password', true);
+		if ($password && $password != '') {
+			$data = [
+				'nama' => $nama,
+				'username' => $username,
+				'password' => password_hash($password, PASSWORD_BCRYPT)
+			];
+		} else {
+			$data = [
+				'nama' => $nama,
+				'username' => $username,
+			];
+		}
+		$save = $this->model->edit('user', $data, 'user_id', $id);
+		if ($save) {
+			redirect('meja');
+		} else {
 			redirect('meja');
 		}
 	}

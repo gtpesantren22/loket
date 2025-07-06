@@ -134,7 +134,7 @@
         <tr>
             <td>TUJUAN</td>
             <td>:</td>
-            <td><?= $data->lembaga; ?> Darul Lughah Wal Karomah</td>
+            <td><?= $data->lembaga; ?></td>
         </tr>
         <tr>
             <td>ALAMAT</td>

@@ -13,10 +13,23 @@ class Santri extends MY_Controller
 
     public function index()
     {
-        $santri = $this->psb->query("SELECT * FROM tb_santri WHERE ket = 'baru'")->result_array();
-
+        $santriData = [];
+        $santri = $this->psb->query("SELECT * FROM tb_santri WHERE ket = 'baru'")->result();
+        foreach ($santri as $sn) {
+            $mangkat = $this->model->getBy('berangkat', 'id_santri', $sn->id_santri)->row();
+            $santriData[] = [
+                'id_santri' => $sn->id_santri,
+                'nama' => $sn->nama,
+                'lembaga' => $sn->lembaga,
+                'ket' => $sn->ket,
+                'desa' => $sn->desa,
+                'kec' => $sn->kec,
+                'nis' => $sn->nis,
+                'berangkat' => $mangkat ? 1 : 0,
+            ];
+        }
         // Simpan dalam key 'data'
-        $data['data'] = $santri;
+        $data['data'] = $santriData;
 
         // Load view dan kirim array $data
         $this->load->view('santri', $data);

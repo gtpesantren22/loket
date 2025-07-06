@@ -117,12 +117,12 @@
                     <p class="text-gray-600">Total: <span id="totalSantri" class="font-medium">0 Santri</span></p>
                 </div>
                 <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full md:w-auto">
-                    <button class="flex bg-secondary hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='<?= base_url('meja') ?>'">
-                        <i class="fas fa-arrow-left mr-2"></i> Kembali
-                    </button>
                     <!-- Tombol Tambah Santri -->
                     <button id="btnTambahSantri" class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center whitespace-nowrap">
                         <i class="fas fa-plus mr-2"></i> Tambah Santri
+                    </button>
+                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg flex items-center" onclick="window.location='<?= base_url('meja') ?>'">
+                        <i class="fas fa-arrow-left mr-2"></i> Ke Antrian
                     </button>
 
                     <!-- Tombol Export -->
@@ -146,7 +146,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Tabel Data Santri dengan DataTables -->
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="overflow-x-auto">
@@ -159,6 +158,7 @@
                             <th class="py-3 px-6 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Kamar</th>
                             <th class="py-3 px-6 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">lembaga</th>
                             <th class="py-3 px-6 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Status</th>
+                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Berangkat</th>
                             <th class="py-3 px-6 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
@@ -231,12 +231,45 @@
             </div>
         </div>
     </div>
+    <div id="mangkatModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <!-- Modal header -->
+                <div class="flex justify-between items-center pb-3">
+                    <h3 id="modalTitle" class="text-lg font-semibold">Tambah Data Santri</h3>
+                    <button onclick="closeModal()" class="modal-close cursor-pointer z-50">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="mangkatForm" class="space-y-4">
+                    <input type="hidden" id="mangkatId">
+                    <div>
+                        <label for="nis" class="block text-sm font-medium text-gray-700">Tanggal Berangkat</label>
+                        <input type="date" name="tanggal" data-tanggal="" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="flex justify-end pt-4 space-x-3">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                            Batal
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <pre>
 </pre>
     <script>
         // Data contoh santri (dalam aplikasi nyata, data ini akan berasal dari API)
         const sampleData = <?= json_encode($data ?? [], JSON_UNESCAPED_UNICODE); ?>;
-        console.log('DATA DARI PHP:', sampleData);
+        // console.log('DATA DARI PHP:', sampleData);
 
         // Inisialisasi DataTable
         let santriTable;
@@ -264,7 +297,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <div class="font-medium text-gray-900">${row.nama}</div>
-                                        <div class="text-gray-500 text-sm">${row.desa || '-'}</div>
+                                        <div class="text-gray-500 text-sm">${row.desa+' - '+row.kec}</div>
                                     </div>
                                 </div>
                                 `;
@@ -291,6 +324,19 @@
                             if (data != 'baru') stts = 'Lanjutan';
 
                             return `<span class="px-2 py-1 text-xs font-semibold rounded-full ${bgColor}">${stts}</span>`;
+                        }
+                    },
+                    {
+                        data: 'berangkat',
+                        render: function(data, row) {
+                            let bgColor = 'bg-green-100 text-green-800';
+                            let stts = 'Berangkat';
+                            let btn = '';
+                            if (data != 1) bgColor = 'bg-red-100 text-red-800';
+                            if (data != 1) stts = 'Belum';
+                            if (data != 1) btn = "<button data-id='" + row.id_santri + "' class='px-2 py-1 text-xs font-semibold rounded-full btn-mangkat'><i class='fa fa-check-circle'></i></button>";
+
+                            return `<span class="px-2 py-1 text-xs font-semibold rounded-full ${bgColor}">${stts}</span> ${btn}`;
                         }
                     },
                     {
@@ -345,6 +391,14 @@
             $('#santriId').val('');
             $('#santriModal').removeClass('hidden');
         });
+        $('.btn-mangkat').click(function() {
+            // $('#modalTitle').text('Tambah Data Santri');
+            // $('#mangkatForm')[0].reset();
+            var id = $(this).data('id');
+            alert(id)
+            $('#mangkatId').val('');
+            $('#mangkatModal').removeClass('hidden');
+        });
 
         // Fungsi untuk edit santri
         function editSantri(id) {
@@ -374,6 +428,7 @@
         // Fungsi untuk menutup modal
         function closeModal() {
             $('#santriModal').addClass('hidden');
+            $('#mangkatModal').addClass('hidden');
         }
 
         // Handle form submission

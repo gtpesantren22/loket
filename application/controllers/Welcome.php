@@ -152,19 +152,21 @@ class Welcome extends MY_Controller
 		$meja = $this->input->post('meja', true);
 		$user = $this->input->post('user', true);
 
-		$cekUser = $this->model->getBy2('antrian', 'pelayan', $user, 'ket', 'proses')->row();
-		$cekMeja = $this->model->getBy2('antrian', 'loket', $meja, 'ket', 'proses')->row();
-		if ($cekUser && $cekMeja) {
+		$cekUser = $this->model->getBy3('antrian', 'tanggal', date('Y-m-d'), 'pelayan', $user, 'ket', 'proses')->row();
+		$cekMeja = $this->model->getBy3('antrian', 'tanggal', date('Y-m-d'), 'loket', $meja, 'ket', 'proses')->row();
+		if ($cekUser || $cekMeja) {
 			$this->session->set_flashdata('error', 'Meja atau operator sedang melayani');
 		} else {
 			$upNew = $this->model->edit('petugas', ['user_id' => $user], 'meja_id', $meja);
-			if ($upOld && $upNew) {
+			if ($upNew) {
 				$this->session->set_flashdata('error', 'Update selesai');
 				redirect('welcome');
 			} else {
 				redirect('welcome');
 			}
 		}
+		// echo $cekUser ? 'data ada' : 'kosong';
+		// echo $cekMeja ? 'data ada' : 'kosong';
 	}
 
 	public function batal($id)

@@ -39,6 +39,8 @@ class Welcome extends MY_Controller
 		$data['data_user'] = $this->db->get('user')->result();
 		$data['antrian'] = $this->model->getBy2('antrian', 'ket', 'menunggu', 'tanggal', $harini)->result();
 		$data['antrianAll'] = $this->db->query("SELECT * FROM antrian WHERE tanggal = '$harini' ORDER BY nomor DESC LIMIT 10 ")->result();
+		$data['callname'] = $this->model->getBy('setting', 'kunci', 'callname')->row('isi');
+
 		$this->load->view('welcome_message', $data);
 	}
 
@@ -178,6 +180,16 @@ class Welcome extends MY_Controller
 		} else {
 			$this->session->set_flashdata('error', 'gagal dibatalkan');
 			redirect('welcome');
+		}
+	}
+	public function updateCallName()
+	{
+		$kondisi = $this->input->post('isCheck', true);
+		$save = $this->model->edit('setting', ['isi' => $kondisi], 'kunci', 'callname');
+		if ($save) {
+			echo json_encode('success');
+		} else {
+			echo json_encode('gagal');
 		}
 	}
 }

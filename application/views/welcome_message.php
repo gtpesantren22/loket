@@ -151,6 +151,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										</div> -->
 									</div>
 								</div>
+								<div>
+									<label class="relative inline-flex items-center cursor-pointer mt-3">
+										<input type="checkbox" value="" class="sr-only peer toggle-switch" <?= $callname == 'Y' ? 'checked' : '' ?>>
+										<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+										<span class="ml-3 text-sm font-medium text-gray-900">Panggil dengan nama</span>
+									</label>
+								</div>
 							</form>
 						</div>
 
@@ -321,6 +328,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			document.getElementById('current-time').textContent = timeString;
 			document.getElementById('current-date').textContent = dateString;
 		}
+		document.querySelectorAll('input[type="checkbox"].toggle-switch').forEach(checkbox => {
+			checkbox.addEventListener('change', function() {
+				var kondisi = this.checked;
+				var isCheck = kondisi ? 'Y' : 'N';
+				$.ajax({
+					type: "POST",
+					url: "<?= base_url('welcome/updateCallName') ?>",
+					data: {
+						isCheck: isCheck
+					},
+					success: function(data) {
+						console.log(data);
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log(xhr.responseText);
+					}
+				})
+			});
+		});
 
 		// Update setiap detik
 		setInterval(updateDateTime, 1000);

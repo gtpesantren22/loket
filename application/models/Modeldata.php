@@ -56,4 +56,10 @@ class modeldata extends CI_Model
             return false;
         }
     }
+    public function getByGroup($table, $where, $dtwhere, $group)
+    {
+        $this->db->where($where, $dtwhere);
+        $this->db->group_by($group);
+        return $this->db->get($table);
+    }
 }

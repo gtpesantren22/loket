@@ -15,6 +15,7 @@ class Meja extends MY_Controller
 		$data['username'] = $this->session->userdata('username');
 		$data['user_id'] = $this->session->userdata('user_id');
 		$data['socket'] = $this->model->getBy('setting', 'kunci', 'socket')->row('isi');
+		$data['callname'] = $this->model->getBy('setting', 'kunci', 'callname')->row('isi');
 		$harini = date('Y-m-d');
 		$user_id = $this->session->userdata('user_id');
 		$data['tugas'] = $this->db->query("SELECT * FROM petugas JOIN user ON petugas.user_id=user.user_id JOIN meja ON petugas.meja_id=meja.id WHERE petugas.user_id = '$user_id' ")->row();
@@ -22,7 +23,7 @@ class Meja extends MY_Controller
 		$data['menunggu'] = $this->model->getBy2('antrian', 'tanggal', $harini, 'ket', 'menunggu')->num_rows();
 		$nomormeja = $data['tugas']->nomor;
 		$data['antrianAll'] = $this->db->query("SELECT * FROM antrian WHERE tanggal = '$harini' AND loket = $nomormeja ORDER BY nomor DESC LIMIT 10 ")->result();
-
+		$data['callname'] = $this->model->getBy('setting', 'kunci', 'callname')->row('isi');
 		$this->load->view('loket', $data);
 	}
 

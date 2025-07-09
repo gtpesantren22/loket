@@ -20,4 +20,11 @@ class MY_Controller extends CI_Controller
             show_error("Akses ditolak. Halaman ini hanya untuk $role.", 403, "403 Forbidden");
         }
     }
+
+    protected function cekRole2($role = 'kamar')
+    {
+        if ($this->session->userdata('role') != $role) {
+            show_error("Akses ditolak. Halaman ini hanya untuk $role.", 403, "403 Forbidden");
+        }
+    }
 }

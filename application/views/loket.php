@@ -53,9 +53,9 @@
                     <i class="fas fa-user-circle text-primary mr-2"></i>
                     <span><?= $nama ?></span>
                 </div>
-                <button class="bg-secondary hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='<?= base_url('santri') ?>'">
+                <!-- <button class="bg-secondary hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='<?= base_url('santri') ?>'">
                     <i class="fas fa-users mr-2"></i> Data Santri
-                </button>
+                </button> -->
                 <button class="bg-danger hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center" onclick="window.location='auth/logout'">
                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
                 </button>
@@ -128,8 +128,11 @@
                         <div class="text-gray-700 mb-1"><?= $proses ? $proses->nama : 'nama santri' ?></div>
                         <?php if ($proses): ?>
                             <div class="text-sm text-gray-500">Layanan: <?= $proses && $proses->jenis == 'A' ? 'Cetak Formulir' : 'Pendaftaran Baru' ?></div>
-                            <input type="hidden" id="text" value="<?= 'nomor antrian, ' . $proses->jenis . $proses->nomor . ', ' . strtolower($proses->nama) . ', silahkan menuju operator ' . $proses->loket ?>">
-                            <!-- <input type="hidden" id="text" value="<?= 'nomor antrian, ' . $proses->jenis . $proses->nomor . ',  silahkan menuju operator ' . $proses->loket ?>"> -->
+                            <?php if ($callname == 'Y') { ?>
+                                <input type="hidden" id="text" value="<?= 'nomor antrian, ' . $proses->jenis . $proses->nomor . ', ' . strtolower($proses->nama) . ', silahkan menuju operator ' . $proses->loket ?>">
+                            <?php } else { ?>
+                                <input type="hidden" id="text" value="<?= 'nomor antrian, ' . $proses->jenis . $proses->nomor . ',  silahkan menuju operator ' . $proses->loket ?>">
+                            <?php } ?>
                             <button id="playButton" onclick="speak()"
                                 class="w-full mt-3 bg-primary hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-bullhorn mr-2"></i></i> Panggil Sekarang
